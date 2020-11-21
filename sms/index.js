@@ -1,6 +1,7 @@
 const http = require("http");
 const express = require("express");
 const twilio = require("twilio");
+const bodyParser = require("body-parser");
 
 const {
     PORT,
@@ -11,6 +12,9 @@ const {
 } = process.env;
 
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
 const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 const { MessagingResponse } = twilio.twiml;
@@ -18,7 +22,9 @@ const { MessagingResponse } = twilio.twiml;
 app.post("/sms", (req, res) => {
     const twiml = new MessagingResponse();
 
-    twiml.message("Testing something 123");
+    const msg = twiml.message();
+    msg.body("Testing something 123");
+    msg.media("https://images-na.ssl-images-amazon.com/images/I/71l1%2BAsGBxL._AC_SX522_.jpg");
     res.writeHead(200, {
         "Content-Type": "text/xml"
     });
@@ -28,7 +34,8 @@ app.post("/sms", (req, res) => {
 // client.messages.create({
 //     to: MY_PHONE_NUMBER,
 //     from: TWILIO_PHONE_NUMBER,
-//     body: "this is text example"
+//     body: "this is text example",
+//     mediaUrl: "https://images-na.ssl-images-amazon.com/images/I/71l1%2BAsGBxL._AC_SX522_.jpg"
 // })
 // .then(message => console.log(message));
 
