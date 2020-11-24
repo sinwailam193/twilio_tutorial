@@ -31,6 +31,16 @@ app.post("/sms", (req, res) => {
     res.end(twiml.toString());
 });
 
+app.post("/verify", (req, res) => {
+    
+    console.log(req.body);
+
+    res.writeHead(200, {
+        "Content-Type": "text/xml"
+    });
+    res.end();
+});
+
 // client.messages.create({
 //     to: MY_PHONE_NUMBER,
 //     from: TWILIO_PHONE_NUMBER,
