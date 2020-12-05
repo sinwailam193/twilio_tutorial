@@ -19,20 +19,19 @@ const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 const { MessagingResponse } = twilio.twiml;
 
-app.post("/sms", (req, res) => {
+app.post("/:courseId/reply", (req, res) => {
     const twiml = new MessagingResponse();
-
-    const msg = twiml.message();
-    msg.body("Testing something 123");
-    msg.media("https://images-na.ssl-images-amazon.com/images/I/71l1%2BAsGBxL._AC_SX522_.jpg");
+    console.log(req.body)
+    console.log(req.params, "reply");
     res.writeHead(200, {
         "Content-Type": "text/xml"
     });
-    res.end(twiml.toString());
+    res.end();
 });
 
-app.post("/verify", (req, res) => {
+app.post("/:messageJobId/status", (req, res) => {
     
+    console.log(req.params, "status");
     console.log(req.body);
 
     res.writeHead(200, {
